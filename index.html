@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>VFL Wolfsburg</title>
+  <style>
+    body {
+      background-color: rgba(83, 177, 34, 0.65);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      height: 100px;
+      width: auto;
+    }
+
+    .title-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .stadion-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 8px;
+    }
+
+    .stadion-container img {
+      width: 100%;
+      display: block;
+    }
+
+    #stadion {
+      position: relative;
+      z-index: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      justify-content: center;
+      max-width: 900px;
+    }
+
+    .buttons br {
+      flex-basis: 100%;
+      height: 25px;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="https://banf-werbung.de" target="_blank">
+      <img src="BanfLogo.png" alt="Banf Logo" class="logo" />
+    </a>
+
+    <div class="title-container">
+      <h1>VFL Wolfsburg</h1>
+    </div>
+
+    <a href="https://www.vfl-wolfsburg.de" target="_blank">
+      <img src="VFLLogo.png" alt="VFL Logo" class="logo" />
+    </a>
+  </header>
+
+  <div class="stadion-container">
+    <img id="stadion" src="stadion.png" alt="Stadionbild" />
+
+    <!-- Overlays -->
+    <img class="overlay" id="overlayA" src="1.ReiheNational.png" alt="" />
+    <img class="overlay" id="overlayB" src="1.ReihePlusOberrang.png" alt="" />
+    <img class="overlay" id="overlayC" src="1.und2.ReiheGesamt.png" alt="" />
+    <img class="overlay" id="overlayD" src="2.ReiheGegengerade.png" alt="" />
+    <img class="overlay" id="overlayE" src="2.ReiheGesamt.png" alt="" />
+    <img class="overlay" id="overlayF" src="2.ReiheHintertorBeidseitig.png" alt="" />
+    <img class="overlay" id="overlayG" src="2.ReiheHintertorEinseitig.png" alt="" />
+    <img class="overlay" id="overlayH" src="360GradRegio.png" alt="" />
+    <img class="overlay" id="overlayI" src="Oberrang.png" alt="" />
+    <img class="overlay" id="overlayJ" src="PowerpackPlusHintertorBeidseitig.png" alt="" />
+    <img class="overlay" id="overlayK" src="RegioHaupttribÜne.png" alt="" />
+  </div>
+
+  <div class="buttons">
+    <button onclick="showOverlay('A')">1. Reihe National</button>
+    <button onclick="showOverlay('B')">1. Reihe + Oberrang</button>
+    <button onclick="showOverlay('C')">1. und 2. Reihe gesamt</button>
+    <button onclick="showOverlay('D')">2. Reihe Gegengerade</button>
+    <button onclick="showOverlay('E')">2. Reihe gesamt</button>
+    <button onclick="showOverlay('F')">2. Reihe Hintertor Beidseitg</button>
+    <button onclick="showOverlay('G')">2. Reihe Hintertor Einseitig</button>
+    <button onclick="showOverlay('H')">360 Grad Regio</button>
+    <button onclick="showOverlay('I')">Oberrang</button>
+    <button onclick="showOverlay('J')">Powerpack + Hintertor Beidseitig</button>
+    <button onclick="showOverlay('K')">Regio Haupttribüne</button>
+    <button onclick="showOverlay('L')">löschen</button>
+  </div>
+
+  <script>
+    function showOverlay(bereich) {
+      const stadion = document.getElementById('stadion');
+
+      const overlays = {
+        A: 'overlayA',
+        B: 'overlayB',
+        C: 'overlayC',
+        D: 'overlayD',
+        E: 'overlayE',
+        F: 'overlayF',
+        G: 'overlayG',
+        H: 'overlayH',
+        I: 'overlayI',
+        J: 'overlayJ',
+        K: 'overlayK',
+      };
+
+      // Alle Overlays ausblenden
+      Object.values(overlays).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.opacity = '0';
+      });
+
+      // Wenn "löschen" (L) geklickt wurde, Stadionbild zeigen
+      if (bereich === 'L') {
+        stadion.style.opacity = '1';
+        return;
+      }
+
+      // Stadion ausblenden, entsprechendes Overlay einblenden
+      stadion.style.opacity = '0';
+      const overlayId = overlays[bereich];
+      if (overlayId) {
+        const overlay = document.getElementById(overlayId);
+        if (overlay) overlay.style.opacity = '1';
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
